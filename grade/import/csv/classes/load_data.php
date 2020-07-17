@@ -239,6 +239,13 @@ class gradeimport_csv_load_data {
                 // Exact-value.
                 $select = "{$field} = :{$field}";
             }
+            // Check if User ID is selected and if so, check the value is a number.
+            $idcheck = $userfields['field'];
+            if ($idcheck == 'id') {
+                if (is_numeric($value) !== true) {
+                    $errorkey = 'usermappingerror';
+                }
+            }
 
             // Make sure the record exists and that there's only one matching record found.
             $user = $DB->get_record_select('user', $select, array($userfields['field'] => $value), '*', MUST_EXIST);
